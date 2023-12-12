@@ -2,7 +2,9 @@ package br.com.alura.technews.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import br.com.alura.technews.R
@@ -11,10 +13,13 @@ import br.com.alura.technews.model.Noticia
 import br.com.alura.technews.repository.NoticiaRepository
 import br.com.alura.technews.ui.activity.extensions.mostraErro
 import br.com.alura.technews.ui.recyclerview.adapter.ListaNoticiasAdapter
-import kotlinx.android.synthetic.main.activity_lista_noticias.*
+import br.com.alura.technews.ui.viewmodel.ListaNoticiasViewModel
+import kotlinx.android.synthetic.main.activity_lista_noticias.activity_lista_noticias_fab_salva_noticia
+import kotlinx.android.synthetic.main.activity_lista_noticias.activity_lista_noticias_recyclerview
 
 private const val TITULO_APPBAR = "Notícias"
 private const val MENSAGEM_FALHA_CARREGAR_NOTICIAS = "Não foi possível carregar as novas notícias"
+private const val TAG = "ListaNoticiasActivity"
 
 class ListaNoticiasActivity : AppCompatActivity() {
 
@@ -31,6 +36,10 @@ class ListaNoticiasActivity : AppCompatActivity() {
         title = TITULO_APPBAR
         configuraRecyclerView()
         configuraFabAdicionaNoticia()
+
+        val provide = ViewModelProviders.of(this)
+        val viewModel = provide.get(ListaNoticiasViewModel::class.java)
+        Log.i(TAG, "onCreate: ${viewModel.toString()}")
     }
 
     override fun onResume() {
