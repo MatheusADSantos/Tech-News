@@ -25,7 +25,7 @@ private const val TAG = "ListaNoticiasActivity"
 
 class ListaNoticiasActivity : AppCompatActivity() {
 
-//    private val repository by lazy {
+    //    private val repository by lazy {
 //        NoticiaRepository(AppDatabase.getInstance(this).noticiaDAO)
 //    }
     private val adapter by lazy {
@@ -69,15 +69,14 @@ class ListaNoticiasActivity : AppCompatActivity() {
     }
 
     private fun buscaNoticias() {
-        viewModel.buscaTodos().observe(this, Observer {
-            Log.i("teste", "atualizando noticias")
-            adapter.atualiza(it)
+        viewModel.buscaTodos().observe(this, Observer { resource ->
+            resource.dado?.let {
+                adapter.atualiza(it)
+            }
+            resource.erro?.let {
+                mostraErro(MENSAGEM_FALHA_CARREGAR_NOTICIAS)
+            }
         })
-//        quandoSucesso = {
-//            adapter.atualiza(it)
-//        }, quandoFalha = {
-//            mostraErro(MENSAGEM_FALHA_CARREGAR_NOTICIAS)
-//        }
     }
 
     private fun abreFormularioModoCriacao() {

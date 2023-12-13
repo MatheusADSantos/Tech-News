@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.alura.technews.model.Noticia
 import br.com.alura.technews.repository.NoticiaRepository
+import br.com.alura.technews.repository.Resource
 
 const val TAG = "ListaNoticiasViewModel"
 
@@ -22,7 +23,7 @@ class ListaNoticiasViewModel(private val repository: NoticiaRepository) : ViewMo
         Log.e(TAG, "onCleared: ViewModel destruida!")
     }
 
-    fun buscaTodos(): LiveData<List<Noticia>> {
+    fun buscaTodos(): LiveData<Resource<List<Noticia>?>> {
         return repository.buscaTodos()
     }
 
