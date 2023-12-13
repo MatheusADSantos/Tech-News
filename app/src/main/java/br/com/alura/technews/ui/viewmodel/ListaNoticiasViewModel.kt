@@ -11,21 +11,19 @@ const val TAG = "ListaNoticiasViewModel"
 
 class ListaNoticiasViewModel(private val repository: NoticiaRepository) : ViewModel() {
 
+    // onCreate
     init {
         Log.i(TAG, "Criando ListaNoticiasViewModel...")
     }
 
+    // OnDestroy
     override fun onCleared() {
         super.onCleared()
         Log.e(TAG, "onCleared: ViewModel destruida!")
     }
 
     fun buscaTodos(): LiveData<List<Noticia>> {
-        var liveData = MutableLiveData<List<Noticia>>()
-        repository.buscaTodos(quandoSucesso = { noticiasNovas ->
-            liveData.value = noticiasNovas
-        }, quandoFalha = {})
-        return liveData
+        return repository.buscaTodos()
     }
 
 
