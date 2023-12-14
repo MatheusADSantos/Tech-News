@@ -2,7 +2,6 @@ package br.com.alura.technews.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import br.com.alura.technews.R
 import br.com.alura.technews.database.AppDatabase
 import br.com.alura.technews.model.Noticia
+import br.com.alura.technews.repository.FalhaResource
 import br.com.alura.technews.repository.NoticiaRepository
+import br.com.alura.technews.repository.SucessoResource
 import br.com.alura.technews.ui.activity.extensions.mostraErro
 import br.com.alura.technews.ui.recyclerview.adapter.ListaNoticiasAdapter
 import br.com.alura.technews.ui.viewmodel.ListaNoticiasViewModel
@@ -25,9 +26,6 @@ private const val TAG = "ListaNoticiasActivity"
 
 class ListaNoticiasActivity : AppCompatActivity() {
 
-    //    private val repository by lazy {
-//        NoticiaRepository(AppDatabase.getInstance(this).noticiaDAO)
-//    }
     private val adapter by lazy {
         ListaNoticiasAdapter(context = this)
     }
@@ -73,8 +71,11 @@ class ListaNoticiasActivity : AppCompatActivity() {
             resource.dado?.let {
                 adapter.atualiza(it)
             }
-            resource.erro?.let {
-                mostraErro(MENSAGEM_FALHA_CARREGAR_NOTICIAS)
+            when (resource) {
+                is SucessoResource -> {}
+                is FalhaResource -> {
+                    mostraErro(MENSAGEM_FALHA_CARREGAR_NOTICIAS)
+                }
             }
         })
     }

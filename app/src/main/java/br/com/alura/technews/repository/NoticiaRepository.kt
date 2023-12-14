@@ -16,20 +16,17 @@ class NoticiaRepository(
     private var noticiasEncontradasCacheadas = MutableLiveData<Resource<List<Noticia>?>>()
 
     fun buscaTodos(): LiveData<Resource<List<Noticia>?>> {
-        buscaInterno(quandoSucesso = {
+        val atualizaListaNoticias: (List<Noticia>) -> Unit = {
             noticiasEncontradasCacheadas.value = Resource(dado = it)
-        })
-        buscaNaApi(quandoSucesso = {
-            noticiasEncontradasCacheadas.value = Resource(dado = it)
-        }, quandoFalha = { erro ->
+        }
+        buscaInterno(quandoSucesso = atualizaListaNoticias)
+        buscaNaApi(quandoSucesso = atualizaListaNoticias, quandoFalha = { erro ->
             val resourceAtual = noticiasEncontradasCacheadas.value
-            val resourceCriado: Resource<List<Noticia>?> =
-                if (resourceAtual?.dado != null) {
-                    Resource(dado = resourceAtual.dado, erro = erro)
-                } else {
-                    Resource(dado = null, erro = erro)
-                }
-            noticiasEncontradasCacheadas.value = resourceCriado
+            val resourceDeFalha = criaResourceDeFalha<List<Noticia>?>(
+                resourceAtual,
+                erro
+            )
+            noticiasEncontradasCacheadas.value = resourceDeFalha
         })
         return noticiasEncontradasCacheadas
     }
