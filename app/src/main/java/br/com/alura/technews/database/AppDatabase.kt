@@ -16,12 +16,20 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
 
+        // Trabalhando com o design pattern singleton, ou seja, uma unica instancia do db
+        private lateinit var db: AppDatabase
+
         fun getInstance(context: Context): AppDatabase {
-            return Room.databaseBuilder(
+
+            if (::db.isInitialized) return db
+
+            db = Room.databaseBuilder(
                 context,
                 AppDatabase::class.java,
                 NOME_BANCO_DE_DADOS
             ).build()
+
+            return db
         }
 
     }
