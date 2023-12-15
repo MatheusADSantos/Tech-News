@@ -42,12 +42,15 @@ class NoticiaRepository(
         return liveData
     }
 
-    fun remove(
-        noticia: Noticia,
-        quandoSucesso: () -> Unit,
-        quandoFalha: (erro: String?) -> Unit
-    ) {
-        removeNaApi(noticia, quandoSucesso, quandoFalha)
+    fun remove(noticia: Noticia): LiveData<Resource<Void?>> {
+        Log.i("NoticiaRepositoy", "remove: $noticia")
+        val liveData = MutableLiveData<Resource<Void?>>()
+        removeNaApi(noticia, quandoSucesso = {
+            liveData.value = Resource(null)
+        }, quandoFalha = { error ->
+            Resource(dado = null, erro = error)
+        })
+        return liveData
     }
 
     fun edita(noticia: Noticia): LiveData<Resource<Void?>> {
@@ -60,14 +63,16 @@ class NoticiaRepository(
         return liveData
     }
 
-    fun buscaPorId(
-        noticiaId: Long,
-        quandoSucesso: (noticiaEncontrada: Noticia?) -> Unit
-    ) {
-        BaseAsyncTask(quandoExecuta = {
-            dao.buscaPorId(noticiaId)
-        }, quandoFinaliza = quandoSucesso)
-            .execute()
+    fun buscaPorId(noticiaId: Long): LiveData<Noticia?> {
+        val liveData = MutableLiveData<Noticia?>()
+        BaseAsyncTask(
+            quandoExecuta = {
+                dao.buscaPorId(id = noticiaId)
+            },
+            quandoFinaliza = {
+                liveData.value = it
+            }).execute()
+        return liveData
     }
 
     private fun buscaNaApi(

@@ -6,7 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val LOCAL_HOST = "172.19.14.237"//"192.168.86.2"
+private const val LOCAL_HOST = "192.168.86.2"
 private const val BASE_URL = "http://$LOCAL_HOST:8080/"
 
 class AppRetrofit {

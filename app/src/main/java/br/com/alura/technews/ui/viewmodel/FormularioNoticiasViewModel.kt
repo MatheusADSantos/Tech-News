@@ -18,5 +18,6 @@ class FormularioNoticiasViewModel(private val repository: NoticiaRepository) : V
         }
     }
 
+    fun buscaPorId(id: Long) = repository.buscaPorId(id)
 
 }
