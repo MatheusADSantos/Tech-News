@@ -12,9 +12,7 @@ class VisualizaNoticiaViewModel(
     private val repository: NoticiaRepository
 ) : ViewModel() {
 
-    private val noticiaEncontrada = buscaPorId()
-
-    fun buscaPorId() = repository.buscaPorId(id)
+    val noticiaEncontrada = repository.buscaPorId(id)
 
     fun remove(): LiveData<Resource<Void?>> {
         Log.i("VisualizaViewModel", "remove: ")
