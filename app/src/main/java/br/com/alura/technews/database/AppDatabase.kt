@@ -16,7 +16,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
 
-        // Trabalhando com o design pattern singleton, ou seja, uma unica instancia do db
+        // Working with designer pattern called singleton, just a single instance from Data Base(db)
         private lateinit var db: AppDatabase
 
         fun getInstance(context: Context): AppDatabase {
