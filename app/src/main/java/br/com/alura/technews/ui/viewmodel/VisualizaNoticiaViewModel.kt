@@ -8,7 +8,7 @@ import br.com.alura.technews.repository.NoticiaRepository
 import br.com.alura.technews.repository.Resource
 
 class VisualizaNoticiaViewModel(
-    private val id: Long,
+    id: Long,
     private val repository: NoticiaRepository
 ) : ViewModel() {
 
