@@ -19,6 +19,7 @@ import br.com.alura.technews.ui.viewmodel.ListaNoticiasViewModel
 import br.com.alura.technews.ui.viewmodel.factory.ListaNoticiasViewModelFactory
 import kotlinx.android.synthetic.main.activity_lista_noticias.activity_lista_noticias_fab_salva_noticia
 import kotlinx.android.synthetic.main.activity_lista_noticias.activity_lista_noticias_recyclerview
+import org.koin.android.ext.android.inject
 
 private const val TITULO_APPBAR = "Notícias"
 private const val MENSAGEM_FALHA_CARREGAR_NOTICIAS = "Não foi possível carregar as novas notícias"
@@ -26,11 +27,12 @@ private const val TAG = "ListaNoticiasActivity"
 
 class ListaNoticiasActivity : AppCompatActivity() {
 
+    private val database: AppDatabase by inject<AppDatabase>()
     private val adapter by lazy {
         ListaNoticiasAdapter(context = this)
     }
     private val viewModel by lazy {
-        val repository = NoticiaRepository(AppDatabase.getInstance(this).noticiaDAO)
+        val repository = NoticiaRepository(database.noticiaDAO)
         val factory = ListaNoticiasViewModelFactory(repository = repository)
         val provide = ViewModelProviders.of(this, factory)
         provide.get(ListaNoticiasViewModel::class.java)

@@ -14,10 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:name=".AppAplication">
         <activity android:name=".ui.activity.FormularioNoticiaActivity" />
         <activity android:name=".ui.activity.VisualizaNoticiaActivity" />
-        <activity android:name=".ui.activity.ListaNoticiasActivity">
+        <activity android:name=".ui.activity.ListaNoticiasActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
