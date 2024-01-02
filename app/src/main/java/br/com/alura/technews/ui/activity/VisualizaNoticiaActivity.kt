@@ -25,9 +25,8 @@ private const val MENSAGEM_FALHA_REMOCAO = "Não foi possível remover notícia"
 
 class VisualizaNoticiaActivity : AppCompatActivity() {
 
-    private val database by inject<AppDatabase>()
+    private val repository by inject<NoticiaRepository>()
     private val viewModel: VisualizaNoticiaViewModel by lazy {
-        val repository = NoticiaRepository(database.noticiaDAO)
         val factory = VisualizaViewModelFactory(noticiaId, repository = repository)
         ViewModelProviders.of(this, factory)
             .get(VisualizaNoticiaViewModel::class.java)

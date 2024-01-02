@@ -27,12 +27,11 @@ private const val TAG = "ListaNoticiasActivity"
 
 class ListaNoticiasActivity : AppCompatActivity() {
 
-    private val database: AppDatabase by inject<AppDatabase>()
+    private val repository by inject<NoticiaRepository>()
     private val adapter by lazy {
         ListaNoticiasAdapter(context = this)
     }
     private val viewModel by lazy {
-        val repository = NoticiaRepository(database.noticiaDAO)
         val factory = ListaNoticiasViewModelFactory(repository = repository)
         val provide = ViewModelProviders.of(this, factory)
         provide.get(ListaNoticiasViewModel::class.java)
