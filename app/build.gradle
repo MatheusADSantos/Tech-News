@@ -56,4 +56,5 @@ dependencies {
 
     // DI (Dependency Injection - Koin)
     implementation 'org.koin:koin-android:2.0.0-rc-2'
+    implementation 'org.koin:koin-android-viewmodel:2.0.0-rc-2'
 }

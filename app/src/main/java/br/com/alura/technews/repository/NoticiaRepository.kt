@@ -145,7 +145,6 @@ class NoticiaRepository(
         )
     }
 
-
     private fun removeInterno(
         noticia: Noticia,
         quandoSucesso: () -> Unit
